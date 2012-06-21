@@ -44,9 +44,6 @@ Corpus.export.load = (corpus) ->
 #   Spell check   #
 # --------------- #
 #
-# This is the main function, it validates the user input, call helper
-# functions, user feedback and decides if no match has been found.
-#
 Spell = {}
 Spell.dict00 = {}
 Spell.dict01 = spell()
@@ -59,13 +56,16 @@ Spell.reset = () ->
   @suggestions = Object.create null
   @suggestions[0] = []
 #
+# This is the main method :), it validates the user input, call helper
+# functions, user feedback and decides if no match has been found.
+#
 Spell.main = (input, force = no, cli = no) ->
   @FORCE = force
   @CORPUS = _.e.corpus()
   found = no
   #
   if _.isUndefined @CORPUS
-    throw new Error('corpus object have being loaded')
+    throw new Error('corpus object have not being loaded')
   else
     source = @CORPUS
   if cli is yes then @CLI = yes
@@ -80,7 +80,7 @@ Spell.main = (input, force = no, cli = no) ->
   #
   # I chose to not remove non ALPHANUM characters because in this way the
   # app is more robust. It could be used by non English languages, assuming
-  # a language corpus is provided.
+  # the language corpus is provided.
   #
   if typeof(input) isnt 'string' or _.isUndefined input
     throw new Error('User input must be a string')
@@ -290,7 +290,7 @@ misspell = (word, difficulty = 'easy') ->
       _.times _.e.randNum(4), ->
         newWord.push letter
     #
-    # choosing a random letter to add to the misspelled word. 
+    # choosing a random letter to add to the misspelled word.
     if _.e.randNum(num) is 1
       letter = alpha[_.e.randNum(alpha.length) - 1]
     #
@@ -351,10 +351,10 @@ randWord = (max = Infinity, min = -Infinity) ->
 #
 delay = (ms, cb) ->
   #
-  # TODO: if ms = 0, process.nextTick on node is more efficient then 
+  # TODO: if ms = 0, process.nextTick on node is more efficient then
   # setTimeout. Must create a test to sense the env
   #
-  setTimeout -> 
+  setTimeout ->
     cb()
   , ms
 #
