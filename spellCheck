@@ -1,0 +1,41 @@
+#! /usr/bin/env ./node_modules/.bin/coffee
+#
+# TODO: write some doc (like the deal with the spell module)
+#
+# 3rd party modules
+#
+spell = require 'spell'
+_ = require './mixins.coffee'
+prog = require 'commander'
+#
+# utilities
+#
+print = console.log
+#
+# This function display the output message, re-initiate the global
+# variables and the prompt loop as well.
+#
+main = (word) ->
+  ans = _.e.spell word, prog.force, yes
+  display ans
+  return
+#
+display = (msg) ->
+  if msg isnt undefined then print msg
+  prog.prompt '> ', main
+  return
+#
+# This function creates the command-line interface.
+#
+program = () ->
+  _.e.corpus.load './corpus.json'
+  prog
+    .version('0.0.1')
+    .option('-f, --force', 'use a more precise, but slower algorithm')
+    .parse(process.argv)
+    .prompt('> ', main)
+
+  return
+  #
+program()
+#

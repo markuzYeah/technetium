@@ -1,0 +1,64 @@
+#! /usr/bin/env ./node_modules/.bin/coffee
+#
+#
+#
+fs = require 'fs'
+spawn = require('child_process').spawn
+#
+# 3rd party modules
+#
+_ = require './mixins.coffee'
+spell = require 'spell'
+#
+# utilities
+#
+print = _.e.print
+put = _.e.put
+#
+dict = spell()
+dir = process.argv[2]
+sysDict = fs.readFileSync('/usr/share/dict/words', 'utf-8').split '\n'
+#
+find = spawn 'find', ["#{dir}", '-type', 'f', '-name', '*.txt' ]
+#
+list = ''
+find.stdout.on 'data', (data) -> list += data.toString()
+find.stderr.on 'data', (stderr) -> if stderr then throw stderr
+#
+find.on 'exit', (code) ->
+  ###
+  list.split('\n').forEach (file) ->
+    display = '.'
+    try
+      dict.load fs.readFileSync(file).toString(), reset: false
+    catch err
+      display = '-'
+    finally
+      put display
+  #
+  obj = {}
+  _.each sysDict, (word) ->
+    if word isnt ''
+      word = word.toLowerCase()
+      obj[word] = dict.export().corpus[word] or 1
+    return
+    ###
+  #
+  obj = {
+    name: 'technetium'
+    version: "0.0.1"
+    private: true
+    dependencies: {
+      'coffee-script': '1.3.2'
+      spell: '0.3.0'
+      commander: '0.6.1'
+      underscore: '1.3.3'
+      mocha: '1.2.0'
+      chai: '1.0.2'
+    }
+  }
+  jsonData = JSON.stringify obj, null, 2 
+  fs.writeFile 'corpus2.json', jsonData, (err) ->
+    if err then throw err
+    print '\ncorpus processed'
+    ###
