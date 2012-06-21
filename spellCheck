@@ -1,6 +1,6 @@
 #! /usr/bin/env ./node_modules/.bin/coffee
 #
-# TODO: write some doc (like the deal with the spell module)
+# TODO: write some doc.
 #
 # 3rd party modules
 #
