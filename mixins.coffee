@@ -1,6 +1,6 @@
 #! /usr/bin/env coffee
 #
-# TODO: write some doc (like the deal with the spell module)
+# TODO: write some doc (like the deal with the spell module).
 #
 # 3rd party modules
 #

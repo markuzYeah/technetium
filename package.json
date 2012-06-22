@@ -1,6 +1,15 @@
 {
   "name": "technetium",
   "version": "0.0.1",
+  "description": "a awesome spell checker",
+  "author": "Marcos Guimaraes",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tomatoNuts/technetium.git"
+  },
+  "engines": {
+    "node": "0.6.x"
+  },
   "private": true,
   "dependencies": {
     "coffee-script": "1.3.2",
