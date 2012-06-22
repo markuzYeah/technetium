@@ -345,19 +345,6 @@ randWord = (max = Infinity, min = -Infinity) ->
       score: corpus[word]
     }
 #
-# ------- #
-#  delay  #
-# ------- #
-#
-delay = (ms, cb) ->
-  #
-  # TODO: if ms = 0, process.nextTick on node is more efficient then
-  # setTimeout. Must create a test to sense the env
-  #
-  setTimeout ->
-    cb()
-  , ms
-#
 # Creating the underscore mixins. Keeping all my mixins under the _.e
 # namespace. Avoiding collisions.
 #
@@ -369,7 +356,6 @@ E.spell = Spell.export
 E.misspell = misspell
 E.randNum = randNum
 E.randWord = randWord
-E.delay = delay
 #
 _.mixin e: E
 #
